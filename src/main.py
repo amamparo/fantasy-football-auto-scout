@@ -6,12 +6,11 @@ from src.get_rostered_players import get_rostered_players
 
 
 def main():
-    print('\nGetting owner info...')
     owners = get_owners()
 
     print('\nGetting player info...')
     players = get_rostered_players(owners)
-    print('Got %s players' % len(players))
+    print('\nGot %s rostered players' % len(players))
 
     print('\nGenerating trades shortlist...')
     trades = evaluate_and_shortlist_trades(owners, players)
