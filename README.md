@@ -1,4 +1,4 @@
-#Fantasy Football Auto Scout
+# Fantasy Football Auto Scout
 
 ## Requirements
 - Python 3.7.x
