@@ -1,0 +1,1 @@
+base_url: str = 'https://football.fantasysports.yahoo.com'
