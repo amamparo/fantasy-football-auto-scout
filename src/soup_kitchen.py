@@ -1,13 +1,11 @@
-import requests
 from bs4 import BeautifulSoup
 
-from src.env import request_cookie, proxy_base_url
+from src.yahoo_proxy.client import YahooProxyClient
 
 
 class SoupKitchen:
-    @staticmethod
-    def get(url_path: str) -> BeautifulSoup:
-        return BeautifulSoup(
-            requests.get('%s%s' % (proxy_base_url, url_path), headers={'cookie': request_cookie}).text,
-            'lxml'
-        )
+    def __init__(self, yahoo_proxy_client: YahooProxyClient = YahooProxyClient()):
+        self.__yahoo_proxy_client = yahoo_proxy_client
+
+    def get(self, url_path: str) -> BeautifulSoup:
+        return BeautifulSoup(self.__yahoo_proxy_client.get(url_path), 'lxml')

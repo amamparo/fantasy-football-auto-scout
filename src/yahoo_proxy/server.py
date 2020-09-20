@@ -7,7 +7,7 @@ import requests
 from flask import Flask, Response, request
 
 from src.constants import base_url
-from src.yahoo_proxy.env import port
+from src.env import proxy_port
 
 logger = logging.getLogger('yahoo-proxy-server')
 logger.setLevel(logging.INFO)
@@ -52,4 +52,4 @@ def forward_to_yahoo(ignored):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=port, debug=True, threaded=True)
+    app.run(host='0.0.0.0', port=proxy_port, debug=True, threaded=True)
