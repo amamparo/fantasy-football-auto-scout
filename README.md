@@ -1,5 +1,7 @@
 # Fantasy Football Auto Scout
 
+![Screenshot](img/screenshot.png)
+
 ## Requirements
 - Python 3.7.x
 - [Pipenv](https://pypi.org/project/pipenv/)
