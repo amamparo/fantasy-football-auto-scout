@@ -20,7 +20,7 @@ def evaluate_and_shortlist_trades(owners: List[Owner], players: List[Player]) ->
     trade_pairs = [
         (my_player, their_player)
         for my_player, their_player in trade_pairs
-        if my_player.position != their_player.position and abs(my_player.z_score - their_player.z_score) <= 0.5
+        if my_player.position != their_player.position and abs(my_player.z_score - their_player.z_score) <= 1.0
     ]
     trades: List[Trade] = []
     for my_player, their_player in tqdm(trade_pairs):
