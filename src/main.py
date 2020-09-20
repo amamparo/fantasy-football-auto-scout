@@ -1,4 +1,4 @@
-from src.get_current_week import get_current_week
+from src.steps.get_current_week import get_current_week
 from src.steps.display_results import display_results
 from src.steps.evaluate_potential_trades import evaluate_potential_trades
 from src.steps.get_potential_trades import get_potential_trades
