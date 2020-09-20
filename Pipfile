@@ -4,10 +4,17 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [scripts]
-scrape_pipeline = "python -m src.jobs.scrape.local_scrape_pipeline"
-scout_trades = "python -m src.jobs.scout_trades.main"
+deploy = "python -m aws.stack"
 
 [dev-packages]
+aws-cdk-core = "*"
+aws-cdk-aws-lambda = "*"
+aws-cdk-aws-s3 = "*"
+aws-cdk-aws-iam = "*"
+aws-cdk-aws-lambda-event-sources = "*"
+aws-cdk-aws-events-targets = "*"
+aws-cdk-aws-stepfunctions-tasks = "*"
+aws-cdk-aws-ecs = "*"
 
 [packages]
 python-dotenv = "*"
@@ -17,6 +24,8 @@ lxml = "*"
 tqdm = "*"
 numpy = "*"
 prettytable = "*"
+aws-cdk-aws-ecs-patterns = "*"
+flask = "*"
 
 [requires]
 python_version = "3.7"

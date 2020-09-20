@@ -7,3 +7,4 @@ load_dotenv(find_dotenv())
 
 league_id: int = int(environ.get('LEAGUE_ID'))
 request_cookie: str = environ.get('REQUEST_COOKIE')
+proxy_base_url: str = environ.get('PROXY_BASE_URL')

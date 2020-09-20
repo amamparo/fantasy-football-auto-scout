@@ -3,9 +3,10 @@
 ![Screenshot](img/screenshot.png)
 
 ## Requirements
+- An active Yahoo Fantasy Football team
+- Docker
 - Python 3.7.x
 - [Pipenv](https://pypi.org/project/pipenv/)
-- An active Yahoo Fantasy Football team
 
 ## Setup
 Just install the pip dependencies with `pipenv install`
