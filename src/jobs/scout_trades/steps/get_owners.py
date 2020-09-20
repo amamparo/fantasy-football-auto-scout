@@ -2,11 +2,11 @@ from typing import List
 
 from src.env import league_id
 from src.models.owner import Owner
-from src.soup_kitchen import get_soup
+from src.soup_kitchen import SoupKitchen
 
 
-def get_owners() -> List[Owner]:
-    soup = get_soup('/f1/%s' % league_id)
+def get_owners(soup_kitchen: SoupKitchen) -> List[Owner]:
+    soup = soup_kitchen.get('/f1/%s' % league_id)
     standings_table = soup.find('table', id='standingstable')
     trs = standings_table.find('tbody').findAll('tr')
     owners: List[Owner] = []
