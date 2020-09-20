@@ -12,20 +12,14 @@ Just install the pip dependencies with `pipenv install`
 
 ## Environment Variables
 Add these to a gitignored file called `.env` at the repository's root
-- `LEAGUE_ID` - this can be retrieved from the URL on any league page
-- `SEASON` - the 4-digit year of the current NFL season
-- `WEEKS` - total number of weeks in your league
-- `QB` - Your league's setting for total quarterbacks in a starting lineup
-- `RB` - Your league's setting for total running backs in a starting lineup (not including the FLEX slot)
-- `WR` - Your league's setting for total wide receivers in a starting lineup (not including the FLEX slot)
-- `TE` - Your league's setting for total tight ends in a starting lineup (not including the FLEX slot)
-- `K` - Your league's setting for total kickers in a starting lineup
-- `DEF` - Your league's setting for total defenses in a starting lineup
-- `HAS_FLEX` - `true` if you're league is configured to include the "FLEX" position, else `false`
-- `REQUEST_COOKIE` - The value of the `cookie` HTTP header that gets passed around as you navigate through your Yahoo Fantasy Football league in the web browser (you'll need to use your browser's dev tools to grab this value)
+
+| Environment&nbsp;Variable | Type | Description |
+| --- | --- | --- |
+| `LEAGUE_ID` | number | this can be retrieved from the URL on any league page |
+| `REQUEST_COOKIE` | string | The value of the `cookie` HTTP header that gets passed around as you navigate through your Yahoo Fantasy Football league in the web browser (you'll need to use your browser's dev tools to grab this value) |
 
 ## To Run
-`pipenv run scout_trades`
+`pipenv run scrape_pipeline`
 
 ## TODO
 - deploy this as a once-daily process on AWS that emails the report to me
