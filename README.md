@@ -24,7 +24,7 @@ Just install the pip dependencies with `pipenv install`
 - `HAS_FLEX` - `true` if you're league is configured to include the "FLEX" position, else `false`
 
 ## To Run
-`pipenv run main`
+`pipenv run scout_trades`
 
 ## TODO
 - deploy this as a once-daily process on AWS that emails the report to me
