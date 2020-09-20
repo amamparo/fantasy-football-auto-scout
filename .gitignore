@@ -2,3 +2,4 @@
 **/*.pyc
 .env
 cdk.out
+.cache
