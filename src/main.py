@@ -1,32 +1,18 @@
-from prettytable import PrettyTable
-
-from src.evaluate_and_shortlist_trades import evaluate_and_shortlist_trades
-from src.get_owners import get_owners
-from src.get_rostered_players import get_rostered_players
+from src.get_current_week import get_current_week
+from src.steps.display_results import display_results
+from src.steps.evaluate_potential_trades import evaluate_potential_trades
+from src.steps.get_potential_trades import get_potential_trades
+from src.steps.get_owners import get_owners
+from src.steps.get_rostered_players import get_rostered_players
 
 
 def main():
     owners = get_owners()
-
-    print('\nGetting player info...')
-    players = get_rostered_players(owners)
-    print('\nGot %s rostered players' % len(players))
-
-    print('\nGenerating trades shortlist...')
-    trades = evaluate_and_shortlist_trades(owners, players)
-
-    print('\nTrades to consider (%s):' % len(trades))
-    t = PrettyTable()
-    t.field_names = ['Trade', 'For', 'With', 'Their Impact', 'My Impact']
-    t.align['Trade'] = 'l'
-    t.align['For'] = 'l'
-    t.align['With'] = 'l'
-    t.align['Their Impact'] = 'r'
-    t.align['My Impact'] = 'r'
-    for trade in trades:
-        other_owner = next(o for o in owners if o.id == trade.their_player.owner_id)
-        t.add_row([trade.my_player, trade.their_player, other_owner, trade.impact_to_them, trade.impact_to_me])
-    print(t)
+    current_week = get_current_week()
+    players = get_rostered_players(owners, current_week)
+    potential_trades = get_potential_trades(owners, players)
+    trades = evaluate_potential_trades(potential_trades)
+    display_results(trades, owners)
 
 
 if __name__ == '__main__':

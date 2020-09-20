@@ -1,3 +1,4 @@
+import json
 import random
 import time
 from os import path
@@ -34,20 +35,27 @@ def __get_from_cache(cache_file_path: str) -> Optional[str]:
             return cached_file.read()
 
 
-def __cached_and_throttled_get(url: str) -> str:
+def __cached_and_throttled_get(url: str, post_data: Optional[dict] = None) -> str:
     cache_dir = '.cache'
     Path(cache_dir).mkdir(exist_ok=True)
-    cache_file_path = path.join(cache_dir, '%s.html' % url.replace('/', ':'))
+    cache_file_path = path.join(
+        cache_dir,
+        '%s%s.html' % (
+            url.replace('/', ':'),
+            '' if post_data is None else '__%s' % json.dumps(post_data).replace('/', ';')
+        )
+    )
     cached_html = __get_from_cache(cache_file_path)
     if cached_html is not None:
         return cached_html
     __conditionally_sleep()
-    html = requests.get(url, headers={'cookie': request_cookie}).text
+    requests_method = requests.get if post_data is None else requests.post
+    html = requests_method(url, post_data, headers={'cookie': request_cookie}).text
     __update_last_http_request_time()
     with open(cache_file_path, 'w+') as cached_file:
         cached_file.write(html)
     return html
 
 
-def get_soup(url_path: str) -> BeautifulSoup:
-    return BeautifulSoup(__cached_and_throttled_get('%s%s' % (base_url, url_path)), 'lxml')
+def get_soup(url_path: str, post_data: Optional[dict] = None) -> BeautifulSoup:
+    return BeautifulSoup(__cached_and_throttled_get('%s%s' % (base_url, url_path), post_data), 'lxml')
