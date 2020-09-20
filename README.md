@@ -11,10 +11,10 @@
 Just install the pip dependencies with `pipenv install`
 
 ## Environment Variables
+Add these to a gitignored file called `.env` at the repository's root
 - `LEAGUE_ID` - this can be retrieved from the URL on any league page
 - `SEASON` - the 4-digit year of the current NFL season
 - `WEEKS` - total number of weeks in your league
-- `REQUEST_COOKIE` - The value of the `cookie` HTTP header that gets passed around as you navigate through your Yahoo Fantasy Football league in the web browser (you'll need to use your browser's dev tools to grab this value)
 - `QB` - Your league's setting for total quarterbacks in a starting lineup
 - `RB` - Your league's setting for total running backs in a starting lineup (not including the FLEX slot)
 - `WR` - Your league's setting for total wide receivers in a starting lineup (not including the FLEX slot)
@@ -22,6 +22,7 @@ Just install the pip dependencies with `pipenv install`
 - `K` - Your league's setting for total kickers in a starting lineup
 - `DEF` - Your league's setting for total defenses in a starting lineup
 - `HAS_FLEX` - `true` if you're league is configured to include the "FLEX" position, else `false`
+- `REQUEST_COOKIE` - The value of the `cookie` HTTP header that gets passed around as you navigate through your Yahoo Fantasy Football league in the web browser (you'll need to use your browser's dev tools to grab this value)
 
 ## To Run
 `pipenv run scout_trades`
