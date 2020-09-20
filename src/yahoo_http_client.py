@@ -1,7 +1,6 @@
 import random
 import time
 from os import path
-from pathlib import Path
 from typing import Optional
 
 import requests
@@ -18,12 +17,7 @@ class YahooHttpClient:
 
     def get(self, url_path: str) -> str:
         url = '%s%s' % (base_url, url_path)
-        cache_dir = '.cache'
-        Path(cache_dir).mkdir(exist_ok=True)
-        cache_file_path = path.join(
-            cache_dir,
-            '%s.html' % url.replace('/', ':')
-        )
+        cache_file_path = path.join('.cache', '%s.html' % url.replace('/', ':'))
         cached_html = self.__get_from_cache(cache_file_path)
         if cached_html is not None:
             return cached_html
