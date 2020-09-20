@@ -9,8 +9,8 @@ from src.constants import base_url
 from src.env import request_cookie
 
 last_http_request: Optional[float] = None
-min_seconds_between_requests: float = 5.0
-max_seconds_between_requests: float = 10.0
+min_seconds_between_requests: float = 5
+max_seconds_between_requests: float = 10
 
 
 def __conditionally_sleep() -> None:
