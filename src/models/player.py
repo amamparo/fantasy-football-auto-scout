@@ -2,7 +2,7 @@ from typing import Optional, Dict
 
 
 class Player:
-    def __init__(self, _id: int, name: str, team: str, position: str, owner_id: int):
+    def __init__(self, _id: str, name: str, team: str, position: str, owner_id: int):
         self.__id = _id
         self.__name = name
         self.__team = team
@@ -21,7 +21,7 @@ class Player:
         return self.__weekly_projections
 
     @property
-    def id(self) -> int:
+    def id(self) -> str:
         return self.__id
 
     @property

@@ -1,6 +1,5 @@
 from src.steps.get_current_week import get_current_week
 from src.steps.display_results import display_results
-from src.steps.evaluate_potential_trades import evaluate_potential_trades
 from src.steps.get_potential_trades import get_potential_trades
 from src.steps.get_owners import get_owners
 from src.steps.get_rostered_players import get_rostered_players
@@ -10,8 +9,7 @@ def main():
     owners = get_owners()
     current_week = get_current_week()
     players = get_rostered_players(owners, current_week)
-    potential_trades = get_potential_trades(owners, players)
-    trades = evaluate_potential_trades(potential_trades)
+    trades = get_potential_trades(owners, players)
     display_results(trades, owners)
 
 

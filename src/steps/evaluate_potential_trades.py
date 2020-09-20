@@ -16,17 +16,15 @@ def evaluate_potential_trades(potential_trades: List[Trade]) -> List[Trade]:
 
 
 def __evaluate_trade(trade: Trade) -> Trade:
-    my_player = trade.my_player
-    their_player = trade.their_player
-    soup = get_soup(
-        '/f1/%s/%s/proposetrade' % (league_id, my_player.owner_id),
-        {
-            'mid2': their_player.owner_id,
-            'tpids[]': [my_player.id],
-            'tpids2[]': [their_player.id],
-            'evaluate': 'evaluate trade'
-        }
-    )
+    my_players = trade.my_players
+    their_players = trade.their_players
+    form_data = [
+        ('mid2', their_players[0].owner_id),
+        ('evaluate', 'evaluate trade')
+    ]
+    form_data.extend([('typids[]', x.id) for x in my_players])
+    form_data.extend([('typids2[]', x.id) for x in their_players])
+    soup = get_soup('/f1/%s/%s/proposetrade' % (league_id, my_players[0].owner_id), form_data)
     impact_table = soup.find('table', id='statTable2')
     impact_to_me_row, impact_to_them_row = impact_table.find('tbody').findAll('tr')
 

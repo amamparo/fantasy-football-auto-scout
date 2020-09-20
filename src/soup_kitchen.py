@@ -3,7 +3,7 @@ import random
 import time
 from os import path
 from pathlib import Path
-from typing import Optional
+from typing import Optional, List, Tuple
 
 import requests
 from bs4 import BeautifulSoup
@@ -35,27 +35,28 @@ def __get_from_cache(cache_file_path: str) -> Optional[str]:
             return cached_file.read()
 
 
-def __cached_and_throttled_get(url: str, post_data: Optional[dict] = None) -> str:
+def __cached_and_throttled_get(url: str, form_data: Optional[List[Tuple[str, any]]] = None) -> str:
+    serialized_form_data = '&'.join(['%s=%s' % (key, val) for key, val in (form_data or [])])
     cache_dir = '.cache'
     Path(cache_dir).mkdir(exist_ok=True)
     cache_file_path = path.join(
         cache_dir,
         '%s%s.html' % (
             url.replace('/', ':'),
-            '' if post_data is None else '__%s' % json.dumps(post_data).replace('/', ';')
+            '' if form_data is None else '__%s' % serialized_form_data
         )
     )
     cached_html = __get_from_cache(cache_file_path)
     if cached_html is not None:
         return cached_html
     __conditionally_sleep()
-    requests_method = requests.get if post_data is None else requests.post
-    html = requests_method(url, post_data, headers={'cookie': request_cookie}).text
+    requests_method = requests.post if form_data else requests.get
+    html = requests_method(url, data=form_data, headers={'cookie': request_cookie}).text
     __update_last_http_request_time()
     with open(cache_file_path, 'w+') as cached_file:
         cached_file.write(html)
     return html
 
 
-def get_soup(url_path: str, post_data: Optional[dict] = None) -> BeautifulSoup:
-    return BeautifulSoup(__cached_and_throttled_get('%s%s' % (base_url, url_path), post_data), 'lxml')
+def get_soup(url_path: str, form_data: Optional[List[Tuple[str, any]]] = None) -> BeautifulSoup:
+    return BeautifulSoup(__cached_and_throttled_get('%s%s' % (base_url, url_path), form_data), 'lxml')
