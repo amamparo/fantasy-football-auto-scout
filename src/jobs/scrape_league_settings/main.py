@@ -1,4 +1,4 @@
-from src.jobs.scrape.scrape_league_settings.league_settings_scraper import LeagueSettingsScraper
+from src.jobs.scrape_league_settings.league_settings_scraper import LeagueSettingsScraper
 
 
 def scrape_league_settings():

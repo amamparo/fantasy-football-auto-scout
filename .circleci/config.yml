@@ -1,0 +1,119 @@
+version: 2.0
+
+shared_config: &shared_config
+  working_directory: ~/workspace
+  docker:
+    - image: circleci/python:3.7.7
+      environment:
+        PIPENV_VENV_IN_PROJECT: true
+
+update_apt: &update_apt
+  name: Update apt
+  command: |
+    sudo apt-get -y -qq update
+install_aws_cdk: &install_aws_cdk
+  name: Install AWS CDK
+  command: |
+    curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+    sudo apt-get -y -qq install nodejs
+    sudo npm i -g aws-cdk
+install_pipenv: &install_pipenv
+  name: Install Pipenv
+  command: |
+    sudo apt-get -y -qq install python-dev python-pip
+    sudo pip install pipenv --upgrade
+pipenv_install: &pipenv_install
+  name: Pipenv Install
+  command: |
+    pipenv --three
+    pipenv install
+pipenv_install_dev: &pipenv_install_dev
+  name: Pipenv Install (with dev dependencies)
+  command: |
+    pipenv --three
+    pipenv install -d
+
+jobs:
+  checkout_and_persist:
+    <<: *shared_config
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/workspace
+      - persist_to_workspace:
+          root: ~/workspace
+          paths: .
+  test:
+    <<: *shared_config
+    steps:
+      - attach_workspace:
+          at: ~/workspace
+      - run:
+          <<: *update_apt
+      - run:
+          <<: *install_pipenv
+      - run:
+          <<: *pipenv_install_dev
+      - run:
+          name: Test
+          command: |
+            pipenv run test
+  build_lambda_deployment_package:
+    <<: *shared_config
+    steps:
+      - attach_workspace:
+          at: ~/workspace
+      - run:
+          <<: *update_apt
+      - run:
+          <<: *install_pipenv
+      - run:
+          <<: *pipenv_install
+      - run:
+          name: Build deployment package
+          command: |
+            chmod +x ./scripts/build_lambda_deployment_package.sh
+            ./scripts/build_lambda_deployment_package.sh
+      - persist_to_workspace:
+          root: ~/workspace
+          paths: .
+  deploy_stack:
+    <<: *shared_config
+    steps:
+      - attach_workspace:
+          at: ~/workspace
+      - run:
+          <<: *update_apt
+      - run:
+          <<: *install_pipenv
+      - run:
+          <<: *pipenv_install_dev
+      - run:
+          <<: *install_aws_cdk
+      - run:
+          name: Deploy stack
+          command: |
+            sudo \
+            AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}" \
+            AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}" \
+            AWS_DEFAULT_REGION="us-east-1" \
+            cdk deploy --require-approval never --verbose
+workflows:
+  version: 2
+  checkout-deploy:
+    jobs:
+      - checkout_and_persist:
+          filters:
+            branches:
+              only:
+                - master
+      - test:
+          requires:
+            - checkout_and_persist
+      - build_lambda_deployment_package:
+          requires:
+            - checkout_and_persist
+      - deploy_stack:
+          requires:
+            - test
+            - build_lambda_deployment_package
