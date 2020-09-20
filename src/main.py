@@ -18,6 +18,11 @@ def main():
     print('\nTrades to consider (%s):' % len(trades))
     t = PrettyTable()
     t.field_names = ['Trade', 'For', 'With', 'Their Impact', 'My Impact']
+    t.align['Trade'] = 'l'
+    t.align['For'] = 'l'
+    t.align['With'] = 'l'
+    t.align['Their Impact'] = 'r'
+    t.align['My Impact'] = 'r'
     for trade in trades:
         other_owner = next(o for o in owners if o.id == trade.their_player.owner_id)
         t.add_row([trade.my_player, trade.their_player, other_owner, trade.impact_to_them, trade.impact_to_me])
