@@ -1,4 +1,3 @@
-from aws_cdk.aws_ecr_assets import DockerImageAsset
 from aws_cdk.aws_ecs import ContainerImage
 from aws_cdk.aws_ecs_patterns import ApplicationLoadBalancedFargateService, ApplicationLoadBalancedTaskImageOptions
 from aws_cdk.core import Stack, Construct, App
@@ -15,17 +14,13 @@ class MainStack(Stack):
             memory_limit_mib=1024,
             cpu=1024,
             task_image_options=ApplicationLoadBalancedTaskImageOptions(
-                image=ContainerImage.from_docker_image_asset(
-                    DockerImageAsset(
-                        self,
-                        'docker-image-asset',
-                        directory=os.getcwd(),
-                        build_args={
-                            'PROXY_PORT': str(container_port)
-                        },
-                        exclude=['cdk.out'],
-                        file='Dockerfile'
-                    )
+                image=ContainerImage.from_asset(
+                    os.getcwd(),
+                    file='Dockerfile',
+                    exclude=['cdk.out'],
+                    build_args={
+                        'PROXY_PORT': str(container_port)
+                    }
                 ),
                 container_port=container_port,
             ),
