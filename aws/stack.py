@@ -24,8 +24,7 @@ class MainStack(Stack):
                             'PROXY_PORT': str(container_port)
                         },
                         exclude=['cdk.out'],
-                        file='Dockerfile',
-                        repository_name=_id
+                        file='Dockerfile'
                     )
                 ),
                 container_port=container_port,
