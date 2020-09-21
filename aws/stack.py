@@ -18,6 +18,8 @@ class MainStack(Stack):
             task_image_options=ApplicationLoadBalancedTaskImageOptions(
                 image=ContainerImage.from_docker_image_asset(
                     DockerImageAsset(
+                        self,
+                        'docker-image-asset',
                         directory=os.getcwd(),
                         build_args={
                             'PROXY_PORT': str(container_port)
