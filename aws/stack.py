@@ -87,7 +87,9 @@ class MainStack(Stack):
             handler='src.jobs.scrape_league_settings.main.lambda_handler',
             role=lambda_role,
             environment={
-                'PROXY_BASE_URL': yahoo_proxy_server.load_balancer.load_balancer_dns_name
+                'PROXY_BASE_URL': yahoo_proxy_server.load_balancer.load_balancer_dns_name,
+                'LEAGUE_ID': os.environ.get('LEAGUE_ID'),
+                'REQUEST_COOKIE': os.environ.get('REQUEST_COOKIE')
             },
             timeout=Duration.minutes(15),
             memory_size=1024
