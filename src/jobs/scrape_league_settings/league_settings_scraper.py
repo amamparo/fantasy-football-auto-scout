@@ -2,17 +2,18 @@ from typing import Dict
 
 from bs4 import BeautifulSoup
 
-from src.env import league_id
+from src.env import Env, RealEnv
 from src.models.league_settings import LeagueSettings
 from src.soup_kitchen import SoupKitchen
 
 
 class LeagueSettingsScraper:
-    def __init__(self, soup_kitchen: SoupKitchen = SoupKitchen()):
+    def __init__(self, soup_kitchen: SoupKitchen = SoupKitchen(), env: Env = RealEnv()):
         self.__soup_kitchen = soup_kitchen
+        self.__env = env
 
     def scrape(self) -> LeagueSettings:
-        soup = self.__soup_kitchen.get('/f1/%s/settings' % league_id)
+        soup = self.__soup_kitchen.get('/f1/%s/settings' % self.__env.league_id)
 
         playoffs_text = self.__get_table_text(soup, 'Playoffs:')
         num_weeks = int([x for x in playoffs_text.replace(',', '').split(' ') if x.isnumeric()][-1])

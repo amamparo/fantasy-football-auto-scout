@@ -57,7 +57,7 @@ jobs:
       - run:
           name: Test
           command: |
-            pipenv run test
+            make test
   build_lambda_deployment_package:
     <<: *shared_config
     steps:
@@ -110,10 +110,10 @@ workflows:
       - test:
           requires:
             - checkout_and_persist
-      - build_lambda_deployment_package:
-          requires:
-            - checkout_and_persist
-      - deploy_stack:
-          requires:
-            - test
-            - build_lambda_deployment_package
+#      - build_lambda_deployment_package:
+#          requires:
+#            - checkout_and_persist
+#      - deploy_stack:
+#          requires:
+#            - test
+#            - build_lambda_deployment_package

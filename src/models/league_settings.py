@@ -16,3 +16,15 @@ class LeagueSettings(JsonSerializable):
             'starters_by_position': self.__starters_by_position,
             'has_flex': self.__has_flex
         }
+
+    @property
+    def num_weeks(self) -> int:
+        return self.__num_weeks
+
+    @property
+    def starters_by_position(self) -> Dict[str, int]:
+        return self.__starters_by_position
+
+    @property
+    def has_flex(self) -> bool:
+        return self.__has_flex

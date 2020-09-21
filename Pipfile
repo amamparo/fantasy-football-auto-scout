@@ -3,9 +3,6 @@ name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
 
-[scripts]
-deploy = "python -m aws.stack"
-
 [dev-packages]
 aws-cdk-core = "*"
 aws-cdk-aws-lambda = "*"
