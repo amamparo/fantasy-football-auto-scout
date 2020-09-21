@@ -9,7 +9,6 @@ class MainStack(Stack):
     def __init__(self, scope: Construct, _id: str, **kwargs) -> None:
         super().__init__(scope, _id, **kwargs)
         container_port = 5000
-        ContainerImage.from_docker_image_asset()
         ApplicationLoadBalancedFargateService(
             self,
             'yahoo-proxy-server',
@@ -17,7 +16,7 @@ class MainStack(Stack):
             cpu=1024,
             task_image_options=ApplicationLoadBalancedTaskImageOptions(
                 image=ContainerImage.from_docker_image_asset(
-                    asset=DockerImageAsset(
+                    DockerImageAsset(
                         self,
                         'docker-image-asset',
                         directory=os.getcwd(),
