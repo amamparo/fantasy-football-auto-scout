@@ -80,7 +80,6 @@ jobs:
   deploy_stack:
     <<: *shared_config
     steps:
-      - setup_remote_docker
       - attach_workspace:
           at: ~/workspace
       - run:
@@ -91,6 +90,8 @@ jobs:
           <<: *pipenv_install_dev
       - run:
           <<: *install_aws_cdk
+      - setup_remote_docker:
+          docker_layer_caching: true
       - run:
           name: Deploy stack
           command: |
