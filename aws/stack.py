@@ -35,5 +35,5 @@ class MainStack(Stack):
 
 if __name__ == '__main__':
     app = App()
-    MainStack(app, 'FantasyFootballAutoScout')
+    MainStack(app, 'fantasy-football-auto-scout')
     app.synth()
