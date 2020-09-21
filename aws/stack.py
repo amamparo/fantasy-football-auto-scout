@@ -1,7 +1,7 @@
 from aws_cdk.aws_ecr_assets import DockerImageAsset
 from aws_cdk.aws_ecs import ContainerImage
 from aws_cdk.aws_ecs_patterns import ApplicationLoadBalancedFargateService, ApplicationLoadBalancedTaskImageOptions
-from aws_cdk.core import Stack, Construct, App, DockerImageAssetLocation
+from aws_cdk.core import Stack, Construct, App
 import os
 
 
@@ -17,7 +17,7 @@ class MainStack(Stack):
             cpu=1024,
             task_image_options=ApplicationLoadBalancedTaskImageOptions(
                 image=ContainerImage.from_docker_image_asset(
-                    DockerImageAsset(
+                    asset=DockerImageAsset(
                         self,
                         'docker-image-asset',
                         directory=os.getcwd(),
