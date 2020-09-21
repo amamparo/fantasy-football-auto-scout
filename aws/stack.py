@@ -26,7 +26,10 @@ class MainStack(Stack):
                 container_port=container_port,
             ),
             listener_port=80,
-            public_load_balancer=True
+            public_load_balancer=True,
+            desired_count=1,
+            max_healthy_percent=100,
+            min_healthy_percent=0
         )
 
 
