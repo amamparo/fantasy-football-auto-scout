@@ -106,7 +106,7 @@ workflows:
           filters:
             branches:
               only:
-                - master
+                - scrape_pipeline
       - test:
           requires:
             - checkout_and_persist
