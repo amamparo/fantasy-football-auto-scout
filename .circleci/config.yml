@@ -107,12 +107,13 @@ workflows:
             branches:
               only:
                 - scrape_pipeline
-#      - test:
-#          requires:
-#            - checkout
-#      - build_lambda_deployment_package:
-#          requires:
-#            - checkout
-      - deploy_stack:
+      - test:
           requires:
             - checkout
+      - build_lambda_deployment_package:
+          requires:
+            - checkout
+      - deploy_stack:
+          requires:
+            - test
+            - build_lambda_deployment_package
