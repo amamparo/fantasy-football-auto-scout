@@ -34,7 +34,7 @@ pipenv_install_dev: &pipenv_install_dev
     pipenv install -d
 
 jobs:
-  checkout_and_persist:
+  checkout:
     <<: *shared_config
     steps:
       - checkout
@@ -102,18 +102,18 @@ workflows:
   version: 2
   checkout-deploy:
     jobs:
-      - checkout_and_persist:
+      - checkout:
           filters:
             branches:
               only:
                 - scrape_pipeline
       - test:
           requires:
-            - checkout_and_persist
-#      - build_lambda_deployment_package:
-#          requires:
-#            - checkout_and_persist
-#      - deploy_stack:
-#          requires:
-#            - test
-#            - build_lambda_deployment_package
+            - checkout
+      - build_lambda_deployment_package:
+          requires:
+            - checkout
+      - deploy_stack:
+          requires:
+            - test
+            - build_lambda_deployment_package

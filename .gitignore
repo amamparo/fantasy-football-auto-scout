@@ -6,3 +6,4 @@ cdk.out
 !.cache/.keep
 .localdatalake/*
 !.localdatalake/.keep
+.build
