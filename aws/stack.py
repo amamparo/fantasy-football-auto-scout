@@ -11,8 +11,8 @@ class MainStack(Stack):
         ApplicationLoadBalancedFargateService(
             self,
             'yahoo-proxy-server',
-            memory_limit_mib=1024,
-            cpu=1024,
+            memory_limit_mib=512,
+            cpu=256,
             task_image_options=ApplicationLoadBalancedTaskImageOptions(
                 image=ContainerImage.from_asset(
                     os.getcwd(),
@@ -22,7 +22,7 @@ class MainStack(Stack):
                         'PROXY_PORT': str(container_port)
                     }
                 ),
-                container_port=container_port,
+                container_port=container_port
             ),
             listener_port=80,
             public_load_balancer=True,
