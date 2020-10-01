@@ -25,7 +25,7 @@ Add these to a gitignored file called `.env` at the repository's root
 - `REQUEST_COOKIE` - The value of the `cookie` HTTP header that gets passed around as you navigate through your Yahoo Fantasy Football league in the web browser (you'll need to use your browser's dev tools to grab this value)
 
 ## To Run
-`pipenv run scout_trades`
+`make scout`
 
 ## TODO
 - deploy this as a once-daily process on AWS that emails the report to me
