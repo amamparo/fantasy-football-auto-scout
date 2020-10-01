@@ -1,8 +1,8 @@
-from src.jobs.scout_trades.steps.get_current_week import get_current_week
-from src.jobs.scout_trades.steps.display_results import display_results
-from src.jobs.scout_trades.steps.get_potential_trades import get_potential_trades
-from src.jobs.scout_trades.steps.get_owners import get_owners
-from src.jobs.scout_trades.steps.get_rostered_players import get_rostered_players
+from src.steps.get_current_week import get_current_week
+from src.steps.display_results import display_results
+from src.steps.get_potential_trades import get_potential_trades
+from src.steps.get_owners import get_owners
+from src.steps.get_rostered_players import get_rostered_players
 from src.soup_kitchen import SoupKitchen
 
 
