@@ -26,6 +26,6 @@ def get_rostered_players(owners: List[Owner], current_week: int, soup_kitchen: S
                     team, position = [token.strip() for token in info.find('span').text.split('-')]
                     players.append(Player(_id, name, team, position, owner.id))
                 bolded_trs = tr.findAll('span', {'class': 'Fw-b'})
-                projection = int(bolded_trs[-1].text.strip()) if bolded_trs else 0
+                projection = int(float(bolded_trs[-1].text.strip()))if bolded_trs else 0
                 next(p for p in players if p.id == _id).set_weekly_projection(week, projection)
     return players
